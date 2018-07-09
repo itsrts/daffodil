@@ -27,4 +27,12 @@
       padding-top: 30px;
     }
   }
+
+  &__payment {
+    padding-top: 27px;
+
+    @include breakpoint(large) {
+      padding-top: 30px;
+    }
+  }
 }

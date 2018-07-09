@@ -8,13 +8,16 @@ import { ShippingSummaryComponent } from './components/shipping-summary/shipping
 import { ShippingOptionComponent } from './components/shipping-option/shipping-option.component';
 import { ShippingComponent } from './components/shipping/shipping.component';
 import { ShippingAsyncWrapperComponent } from './components/shipping-async-wrapper/shipping-async-wrapper.component';
+import { PaymentFormComponent } from './components/payment-form/payment-form.component';
+import { CartModule } from '../cart/cart.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreCheckoutModule
+    CoreCheckoutModule,
+    CartModule
   ],
   declarations: [
     CheckoutViewComponent,
@@ -22,7 +25,8 @@ import { ShippingAsyncWrapperComponent } from './components/shipping-async-wrapp
     ShippingSummaryComponent,
     ShippingOptionComponent,
     ShippingComponent,
-    ShippingAsyncWrapperComponent
+    ShippingAsyncWrapperComponent,
+    PaymentFormComponent
   ],
   exports: [
     CheckoutViewComponent,
@@ -30,7 +34,8 @@ import { ShippingAsyncWrapperComponent } from './components/shipping-async-wrapp
     ShippingSummaryComponent,
     ShippingOptionComponent,
     ShippingComponent,
-    ShippingAsyncWrapperComponent
+    ShippingAsyncWrapperComponent,
+    PaymentFormComponent
   ]
 })
 export class CheckoutModule { }
