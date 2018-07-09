@@ -1,4 +1,4 @@
-export interface PaymentDetails {
+export interface PaymentInfo {
   name: string;
   cardnumber: number;
   month: number;

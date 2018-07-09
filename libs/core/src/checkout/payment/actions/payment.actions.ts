@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { PaymentDetails } from '../models/payment-details';
+import { PaymentInfo } from '../models/payment-info';
 
 export enum PaymentActionTypes {
   UpdatePaymentInfoAction = "[Payment] Update Payment Info Action"
@@ -9,7 +9,7 @@ export enum PaymentActionTypes {
 export class UpdatePaymentInfo implements Action {
   readonly type = PaymentActionTypes.UpdatePaymentInfoAction;
 
-  constructor(public payload: PaymentDetails) {}
+  constructor(public payload: PaymentInfo) {}
 }
 
 export type PaymentActions =
