@@ -11,6 +11,7 @@ import { ShippingAsyncWrapperComponent } from './components/shipping-async-wrapp
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { CartModule } from '../cart/cart.module';
 import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentSummaryComponent } from './components/payment-summary/payment-summary.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     ShippingComponent,
     ShippingAsyncWrapperComponent,
     PaymentFormComponent,
-    PaymentComponent
+    PaymentComponent,
+    PaymentSummaryComponent
   ],
   exports: [
     CheckoutViewComponent,
@@ -37,7 +39,9 @@ import { PaymentComponent } from './components/payment/payment.component';
     ShippingOptionComponent,
     ShippingComponent,
     ShippingAsyncWrapperComponent,
-    PaymentFormComponent
+    PaymentFormComponent,
+    PaymentComponent,
+    PaymentSummaryComponent
   ]
 })
 export class CheckoutModule { }

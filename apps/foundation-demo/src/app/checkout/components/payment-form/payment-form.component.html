@@ -1,6 +1,6 @@
 <form class="payment-form" [formGroup]="form" #ngForm="ngForm" (ngSubmit)="onSubmit(form)">
   <div class="payment-form__title">
-    review & pay
+    payment details
   </div>
   <promotion class="payment-form__promotion"></promotion>
   <div class="payment-form__method-title">Payment Method</div>
@@ -37,4 +37,7 @@
     [class.payment-form__error]="securitycode.errors && (securitycode.touched || ngForm.submitted)"
     [class.payment-form__valid]="!securitycode.errors"/>
   <button type="submit" class="button large expanded">Save & Review Order</button>
+  <div class="payment-form__note">
+    You can review this order before it's final.
+  </div>
 </form>

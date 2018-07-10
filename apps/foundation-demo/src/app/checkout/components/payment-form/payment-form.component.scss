@@ -5,17 +5,17 @@
   display: grid;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  @include section-divider();
   grid-template-columns: 1fr 1fr;
   grid-template-areas: 
     "        title         title"
-    "    promotion      promotion"
+    "    promotion     promotion"
     " method-title  method-title"
     "         name          name"
     "  card-number   card-number"
     "        month          year"
     "security-code security-code"
-    "       button        button";
+    "       button        button"
+    "         note          note";
 
   &__title {
     margin-bottom: 5px;
@@ -73,7 +73,28 @@
   }
 
   & button {
-    margin: 25px 0;
+    margin: 25px 0 10px 0;
     grid-area: button;
+  }
+
+  &__note {
+    justify-self: center;
+    margin-bottom: 25px;
+    grid-area: note;
+    font-size: $small-font-size;
+  }
+
+  @include breakpoint(large) {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas: 
+      "        title         title         title         title         title         title         title   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
+      "    promotion     promotion     promotion     promotion     promotion     promotion     promotion   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
+      " method-title  method-title  method-title  method-title  method-title  method-title  method-title   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
+      "         name          name          name          name          name          name          name   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
+      "  card-number   card-number   card-number   card-number   card-number   card-number   card-number   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
+      "        month         month         month          year          year          year          year   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
+      "security-code security-code security-code security-code security-code security-code security-code   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
+      "       button        button        button        button        button        button   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2"
+      "         note          note          note          note          note          note   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2";
   }
 }
