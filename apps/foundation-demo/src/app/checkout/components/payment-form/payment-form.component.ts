@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormGroup, AbstractControl, FormBuilder } from '@angular/forms';
+import { PaymentInfo } from '@daffodil/core';
 
 @Component({
   selector: 'payment-form',
@@ -8,7 +9,7 @@ import { Validators, FormGroup, AbstractControl, FormBuilder } from '@angular/fo
 })
 export class PaymentFormComponent implements OnInit {
 
-  @Input() paymentInfo;
+  @Input() paymentInfo: PaymentInfo;
   @Output() updatePaymentInfo: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;

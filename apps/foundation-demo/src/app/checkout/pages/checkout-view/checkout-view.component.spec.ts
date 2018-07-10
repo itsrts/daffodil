@@ -1,12 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CheckoutViewComponent } from './checkout-view.component';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { PaymentFormComponent } from '../../components/payment-form/payment-form.component';
+import { PaymentFactory, PaymentInfo, PaymentContainer } from '@daffodil/core';
 
 let stubIsShippingInfoValid = true;
+let paymentFactory = new PaymentFactory();
+let stubPaymentInfo = paymentFactory.create();
 
 @Component({selector: 'shipping-async-wrapper', template: ''})
 class MockShippingAsyncWrapperComponent {
@@ -14,11 +17,20 @@ class MockShippingAsyncWrapperComponent {
 }
 
 @Component({selector: 'payment-form', template: ''})
-class MockPaymentFormComponent {}
+class MockPaymentFormComponent {
+  @Input() paymentInfo: PaymentInfo;
+  @Output() updatePaymentInfo: EventEmitter<any> = new EventEmitter();
+}
 
 @Component({selector: '[shipping-container]', template: '<ng-content></ng-content>', exportAs: 'ShippingContainer'})
 class MockShippingContainer {
   isShippingInfoValid$: Observable<boolean> = of(stubIsShippingInfoValid);
+}
+
+@Component({selector: '[payment-container]', template: '<ng-content></ng-content>', exportAs: 'PaymentContainer'})
+class MockPaymentContainer {
+  paymentInfo$: Observable<PaymentInfo> = of(stubPaymentInfo);
+  updatePaymentInfo: Function = () => {};
 }
 
 describe('CheckoutViewComponent', () => {
@@ -26,6 +38,7 @@ describe('CheckoutViewComponent', () => {
   let fixture: ComponentFixture<CheckoutViewComponent>;
   let shippingAsyncWrapper: MockShippingAsyncWrapperComponent;
   let paymentForm: PaymentFormComponent;
+  let paymentContainer: PaymentContainer;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,7 +46,8 @@ describe('CheckoutViewComponent', () => {
         CheckoutViewComponent,
         MockShippingAsyncWrapperComponent,
         MockShippingContainer,
-        MockPaymentFormComponent
+        MockPaymentFormComponent,
+        MockPaymentContainer
       ]
     })
     .compileComponents();
@@ -46,20 +60,34 @@ describe('CheckoutViewComponent', () => {
 
     shippingAsyncWrapper = fixture.debugElement.query(By.css('shipping-async-wrapper')).componentInstance;
     paymentForm = fixture.debugElement.query(By.css('payment-form')).componentInstance;
+    paymentContainer = fixture.debugElement.query(By.css('[payment-container]')).componentInstance;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should render <payment-form>', () => {
-    expect(paymentForm).not.toBeNull();
   });
   
   describe('on <shipping-async-wrapper>', () => {
     
     it('should set isShippingInfoValid', () => {
       expect(shippingAsyncWrapper.isShippingInfoValid).toEqual(stubIsShippingInfoValid);
+    });
+  });
+
+  describe('on <payment-form>', () => {
+    
+    it('should set paymentInfo', () => {
+      expect(paymentForm.paymentInfo).toEqual(stubPaymentInfo);
+    });
+  });
+
+  describe('when paymentForm.updatePaymentInfo is emitted', () => {
+
+    it('should call PaymentContainer.updatePaymentInfo', () => {
+      spyOn(paymentContainer, 'updatePaymentInfo');
+      paymentForm.updatePaymentInfo.emit(stubPaymentInfo);
+
+      expect(paymentContainer.updatePaymentInfo).toHaveBeenCalledWith(stubPaymentInfo);
     });
   });
 });
