@@ -10,6 +10,7 @@ let stubIsShippingInfoValid = true;
 @Component({selector: 'shipping-async-wrapper', template: ''})
 class MockShippingAsyncWrapperComponent {
   @Input() isShippingInfoValid: boolean;
+  @Output() continueToPayment: EventEmitter<any> = new EventEmitter();
 }
 
 @Component({selector: '[shipping-container]', template: '<ng-content></ng-content>', exportAs: 'ShippingContainer'})
@@ -24,7 +25,6 @@ describe('CheckoutViewComponent', () => {
   let component: CheckoutViewComponent;
   let fixture: ComponentFixture<CheckoutViewComponent>;
   let shippingAsyncWrapper: MockShippingAsyncWrapperComponent;
-  let payment: MockPaymentComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,7 +44,6 @@ describe('CheckoutViewComponent', () => {
     fixture.detectChanges();
 
     shippingAsyncWrapper = fixture.debugElement.query(By.css('shipping-async-wrapper')).componentInstance;
-    payment = fixture.debugElement.query(By.css('payment')).componentInstance;
   });
 
   it('should create', () => {
@@ -58,7 +57,50 @@ describe('CheckoutViewComponent', () => {
     });
   });
 
-  it('should render <payment>', () => {
-    expect(payment).not.toBeNull();
+  describe('when <shipping-async-wrapper> emits continueToPayment', () => {
+    
+    it('should call onContinueToPayment', () => {
+      spyOn(component, 'onContinueToPayment');
+
+      shippingAsyncWrapper.continueToPayment.emit();
+
+      expect(component.onContinueToPayment).toHaveBeenCalled();
+    });
+  });
+
+  describe('ngOnInit', () => {
+    
+    it('should set showPaymentView to false', () => {
+      expect(component.showPaymentView).toBeFalsy();
+    });
+  });
+
+  describe('onContinueToPayment', () => {
+    
+    it('should set showPaymentView to true', () => {
+      component.onContinueToPayment();
+
+      expect(component.showPaymentView).toBeTruthy();
+    });
+  });
+
+  describe('when showPaymentView is false', () => {
+    
+    it('should not render checkout__payment', () => {
+      component.showPaymentView = false;
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('.checkout__payment'))).toBeNull();
+    });
+  });
+
+  describe('when showPaymentView is true', () => {
+    
+    it('should render checkout__payment', () => {
+      component.showPaymentView = true;
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('.checkout__payment'))).not.toBeNull();
+    });
   });
 });

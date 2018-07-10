@@ -9,5 +9,6 @@
     [shippingInfo]="ShippingContainer.shippingInfo$ | async" 
     [shippingOption]="ShippingContainer.shippingOption$ | async"
     (editShippingInfo)="toggleShippingView()"
-    (updateShippingOption)="ShippingContainer.updateShippingOption($event)"></shipping-summary>
+    (updateShippingOption)="ShippingContainer.updateShippingOption($event)"
+    (continueToPayment)="onContinueToPayment()"></shipping-summary>
 </div>

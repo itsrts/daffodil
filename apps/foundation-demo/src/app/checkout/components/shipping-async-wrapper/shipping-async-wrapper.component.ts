@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'shipping-async-wrapper',
@@ -7,4 +7,9 @@ import { Component, Input } from '@angular/core';
 export class ShippingAsyncWrapperComponent {
 
   @Input() isShippingInfoValid: Boolean;
+  @Output() continueToPayment: EventEmitter<any> = new EventEmitter();
+
+  onContinueToPayment() {
+    this.continueToPayment.emit();
+  }
 }

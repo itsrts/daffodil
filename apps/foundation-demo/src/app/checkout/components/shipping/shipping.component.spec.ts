@@ -18,9 +18,10 @@ let stubShippingAddress: ShippingAddress = {
 }
 let stubShippingOption: string = 'shipping option';
 
-@Component({template: '<shipping [isShippingInfoValid]="isShippingInfoValidValue"></shipping>'})
+@Component({template: '<shipping [isShippingInfoValid]="isShippingInfoValidValue" (continueToPayment)="continueToPaymentFunction()"></shipping>'})
 class TestShippingWrapper {
   isShippingInfoValidValue = stubIsShippingInfoValidValue;
+  continueToPaymentFunction: Function = () => {};
 }
 
 @Component({selector: 'shipping-form', template: ''})
@@ -35,6 +36,7 @@ class MockShippingSummaryComponent {
   @Input() shippingOption: string;
   @Output() editShippingInfo: EventEmitter<any> = new EventEmitter();
   @Output() updateShippingOption: EventEmitter<any> = new EventEmitter();
+  @Output() continueToPayment: EventEmitter<any> = new EventEmitter();
 }
 
 @Component({
@@ -161,6 +163,39 @@ describe('ShippingComponent', () => {
         
         expect(shippingContainer.updateShippingOption).toHaveBeenCalledWith(stubShippingOption);
       });
+    });
+  });
+
+  describe('when <shipping-summary> emits continueToPayment', () => {
+    
+    it('should call onContinueToPayment', () => {
+      spyOn(shippingComponent, 'onContinueToPayment');
+
+      shippingSummaryComponent.continueToPayment.emit();
+
+      expect(shippingComponent.onContinueToPayment).toHaveBeenCalled();
+    });
+  });
+
+  describe('onContinueToPayment', () => {
+    
+    it('should call continueToPayment.emit', () => {
+      spyOn(shippingComponent.continueToPayment, 'emit');
+
+      shippingComponent.onContinueToPayment();
+
+      expect(shippingComponent.continueToPayment.emit).toHaveBeenCalled();
+    });
+  });
+
+  describe('when continueToPayment is emitted', () => {
+    
+    it('should call the function passed by the host component', () => {
+      spyOn(component, 'continueToPaymentFunction');
+
+      shippingComponent.continueToPayment.emit();
+
+      expect(component.continueToPaymentFunction).toHaveBeenCalled();
     });
   });
 

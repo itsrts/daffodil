@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'shipping',
@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ShippingComponent implements OnInit {
   
   @Input() isShippingInfoValid: boolean;
+  @Output() continueToPayment: EventEmitter<any> = new EventEmitter();
   showShippingForm: boolean;
 
   ngOnInit() {
@@ -16,5 +17,9 @@ export class ShippingComponent implements OnInit {
 
   toggleShippingView() {
     this.showShippingForm = !this.showShippingForm;
+  }
+
+  onContinueToPayment() {
+    this.continueToPayment.emit();
   }
 }
