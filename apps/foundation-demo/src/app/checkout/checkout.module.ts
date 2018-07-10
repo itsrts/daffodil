@@ -10,6 +10,7 @@ import { ShippingComponent } from './components/shipping/shipping.component';
 import { ShippingAsyncWrapperComponent } from './components/shipping-async-wrapper/shipping-async-wrapper.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { CartModule } from '../cart/cart.module';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { CartModule } from '../cart/cart.module';
     ShippingOptionComponent,
     ShippingComponent,
     ShippingAsyncWrapperComponent,
-    PaymentFormComponent
+    PaymentFormComponent,
+    PaymentComponent
   ],
   exports: [
     CheckoutViewComponent,

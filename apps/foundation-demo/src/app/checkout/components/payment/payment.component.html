@@ -1,0 +1,3 @@
+<div class="payment" payment-container #PaymentContainer="PaymentContainer">
+  <payment-form [paymentInfo]="PaymentContainer.paymentInfo$ | async" (updatePaymentInfo)="PaymentContainer.updatePaymentInfo($event)"></payment-form>
+</div>
