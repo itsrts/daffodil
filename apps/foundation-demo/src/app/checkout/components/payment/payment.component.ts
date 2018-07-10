@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentComponent implements OnInit {
 
-  constructor() { }
+  showPaymentForm: boolean;
 
   ngOnInit() {
+    this.showPaymentForm = true;
   }
 
+  togglePaymentView() {
+    this.showPaymentForm = !this.showPaymentForm;
+  }
 }

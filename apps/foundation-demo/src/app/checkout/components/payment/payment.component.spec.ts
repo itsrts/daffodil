@@ -20,7 +20,7 @@ class MockPaymentFormComponent {
 @Component({selector: 'payment-summary', template: ''})
 class MockPaymentSummaryComponent {
   @Input() paymentInfo: PaymentInfo;
-  @Output() updatePaymentInfo: EventEmitter<any> = new EventEmitter();
+  @Output() editPaymentInfo: EventEmitter<any> = new EventEmitter();
 }
 
 @Component({selector: '[payment-container]', template: '<ng-content></ng-content>', exportAs: 'PaymentContainer'})
@@ -79,7 +79,99 @@ describe('PaymentComponent', () => {
     });
   });
 
-  it('should render <payment-summary>', () => {
-    expect(paymentSummary).not.toBeNull();
+  describe('no <payment-summary>', () => {
+    
+    it('should set paymentInfo', () => {
+      expect(paymentSummary.paymentInfo).toEqual(stubPaymentInfo);
+    });
+  });
+
+  describe('when paymentForm.editPaymentInfo is emitted', () => {
+
+    it('should call payment.togglePaymentView', () => {
+      spyOn(component, 'togglePaymentView');
+      paymentSummary.editPaymentInfo.emit();
+
+      expect(component.togglePaymentView).toHaveBeenCalled();
+    });
+  });
+
+  describe('ngOnInit', () => {
+    
+    it('should set showPaymentForm to true', () => {
+      expect(component.showPaymentForm).toBeTruthy();
+    });
+  });
+
+  describe('togglePaymentView', () => {
+    
+    it('should toggle the showPaymentForm boolean', () => {
+      component.showPaymentForm = true;
+
+      component.togglePaymentView();
+
+      expect(component.showPaymentForm).toBeFalsy();
+    });
+  });
+
+  describe('when showPaymentForm is true', () => {
+
+    let paymentFormNativeElement;
+    let paymentSummaryNativeElement;
+
+    beforeEach(() => {
+      component.showPaymentForm = true;
+      fixture.detectChanges();
+
+      paymentFormNativeElement = fixture.debugElement.query(By.css('payment-form')).nativeElement;
+      paymentSummaryNativeElement = fixture.debugElement.query(By.css('payment-summary')).nativeElement;
+    });
+    
+    it('should not put hidden attribute on payment-form', () => {
+      expect(paymentFormNativeElement.hidden).toBeFalsy();
+    });
+
+    it('should put hidden attribute on payment-summary', () => {
+      expect(paymentSummaryNativeElement.hidden).toBeTruthy();      
+    });
+  });
+
+  describe('when showPaymentForm is false', () => {
+
+    let paymentFormNativeElement;
+    let paymentSummaryNativeElement;
+
+    beforeEach(() => {
+      component.showPaymentForm = false;
+      fixture.detectChanges();
+
+      paymentFormNativeElement = fixture.debugElement.query(By.css('payment-form')).nativeElement;
+      paymentSummaryNativeElement = fixture.debugElement.query(By.css('payment-summary')).nativeElement;
+    });
+
+    it('should put hidden attribute on payment-form', () => {
+      expect(paymentFormNativeElement.hidden).toBeTruthy();
+    });
+
+    it('should not put hidden attribute on payment-summary', () => {
+      expect(paymentSummaryNativeElement.hidden).toBeFalsy();     
+    });
+  });
+
+  describe('when PaymentContainer.paymentInfo$ is null', () => {
+
+    let paymentSummary;
+    
+    beforeEach(() => {
+      paymentContainer.paymentInfo$ = of(null);
+
+      fixture.detectChanges();
+
+      paymentSummary = fixture.debugElement.query(By.css('payment-summary'));
+    });
+
+    it('should not render payment-summary', () => {
+      expect(paymentSummary).toBeNull();
+    });
   });
 });

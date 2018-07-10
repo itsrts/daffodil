@@ -3,7 +3,7 @@
     payment details
   </div>
   <div class="payment-summary__method-title">Payment Method</div>
-  <div class="payment-summary__cardnumber">123</div>
-  <div class="payment-summary__expiration">Exp: 02/32</div>
+  <div class="payment-summary__cardnumber">{{paymentInfo.cardnumber}}</div>
+  <div class="payment-summary__expiration">Exp: {{paymentInfo.month}}/{{paymentInfo.year}}</div>
   <a (click)="onEdit()">Edit</a>
 </div>

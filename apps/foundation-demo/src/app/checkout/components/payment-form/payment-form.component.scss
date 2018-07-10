@@ -96,5 +96,13 @@
       "security-code security-code security-code security-code security-code security-code security-code   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1   free-space1"
       "       button        button        button        button        button        button   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2"
       "         note          note          note          note          note          note   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2   free-space2";
+
+    &__free-space1 {
+      grid-area: free-space1;
+    }
+
+    &__free-space2 {
+      grid-area: free-space2;
+    }
   }
 }
