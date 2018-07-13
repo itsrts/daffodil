@@ -8,37 +8,33 @@ import { ApolloQueryResult } from 'apollo-client';
 
 class ProductService {
     private apollo : Apollo;
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    apollo.create({
-      // By default, this client will send queries to the
-      // `/graphql` endpoint on the same host
-      link: httpLink.create({uri: 'https://daffodil-demo-alpha.myshopify.com/graphql'}),
-      cache: new InMemoryCache(),
-    });
-    this.apollo = apollo;
-  }
 
-  getAll() : Observable<T>  {
-      const query = gql`
-      {
+    constructor(apollo: Apollo, httpLink: HttpLink) {
+        apollo.create({
+            link: httpLink.create({uri: 'https://daffodil-demo-alpha.myshopify.com/graphql'}),
+            cache: new InMemoryCache(),
+        });
+        this.apollo = apollo;
+    }
+
+    getAll() : Observable<T>  {
+        const query = gql`
+        {
         shop {
-          products(first: 250) {
-            edges {
-              node {
-                id
-              }
-            }
-          } 
+        products(first: 250) {
+        edges {
+        node {
+        id
         }
-      }
-      `;
+        }
+        } 
+        }
+        }
+        `;
+        
+        return this.apollo.query({
+            query: query
+        });
 
-      return this.apollo.query({
-          query: query
-      });
-      
-  }
-
-
-
+    }
 }
