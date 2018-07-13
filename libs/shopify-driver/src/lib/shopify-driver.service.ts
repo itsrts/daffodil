@@ -20,18 +20,18 @@ class ProductService {
     getAll() : Observable<T>  {
         const query = gql`
         {
-        shop {
-        products(first: 250) {
-        edges {
-        node {
-        id
-        }
-        }
-        } 
-        }
+            shop {
+                products(first: 250) {
+                    edges {
+                        node {
+                            id
+                        }
+                    }
+                } 
+            }
         }
         `;
-        
+
         return this.apollo.query({
             query: query
         });
