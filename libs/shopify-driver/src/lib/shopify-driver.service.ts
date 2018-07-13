@@ -4,16 +4,26 @@ import {InMemoryCache} from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import { Observable } from 'apollo-link';
 import { ApolloQueryResult } from 'apollo-client';
+import { HttpHeaders } from '@angular/common/http';
 
 
 class ProductService {
     private apollo : Apollo;
 
     constructor(apollo: Apollo, httpLink: HttpLink) {
+
+        const headers = new HttpHeaders({
+            "X-Shopify-Storefront-Access-Token": "9419ecdd446b983348bc3b47dccc8b84"
+        });
+
         apollo.create({
-            link: httpLink.create({uri: 'https://daffodil-demo-alpha.myshopify.com/graphql'}),
+            link: httpLink.create({
+                uri: 'https://daffodil-demo-alpha.myshopify.com/graphql',
+                headers: headers
+            }),
             cache: new InMemoryCache(),
         });
+        
         this.apollo = apollo;
     }
 
