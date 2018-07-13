@@ -12,6 +12,9 @@
     },
     "core": {
       "tags": []
+    },
+    "shopify-driver": {
+      "tags": []
     }
   }
 }

@@ -17,7 +17,15 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@daffodil/core": ["dist/core"]
+      "@daffodil/core": [
+        "dist/core"
+      ],
+      "shopify-driver/*": [
+        "dist/shopify-driver/*"
+      ],
+      "@daffodil/shopify-driver": [
+        "libs/shopify-driver/src/index.ts"
+      ]
     }
   },
   "exclude": [

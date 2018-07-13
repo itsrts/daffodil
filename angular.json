@@ -202,6 +202,34 @@
           }
         }
       }
+    },
+    "shopify-driver": {
+      "root": "libs/shopify-driver",
+      "sourceRoot": "libs/shopify-driver/src",
+      "projectType": "library",
+      "prefix": "daffodil",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/shopify-driver/src/test.ts",
+            "tsConfig": "libs/shopify-driver/tsconfig.spec.json",
+            "karmaConfig": "libs/shopify-driver/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shopify-driver/tsconfig.lib.json",
+              "libs/shopify-driver/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "foundation-demo",
