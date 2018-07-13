@@ -1,25 +1,44 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {ApolloModule, Apollo} from 'apollo-angular';
+import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
+import { Observable } from 'apollo-link';
+import { ApolloQueryResult } from 'apollo-client';
 
-import { Observable } from 'rxjs/Observable';
-import { Product } from '../model/product';
-import { DaffodilConfigService } from '../../config/daffodil-config.service';
 
-@Injectable()
-export class ProductService {
-
-  url = this.daffodilConfigService.config.BASE_URL + 'api/products/';
-
-  constructor(
-    private http: HttpClient,
-    private daffodilConfigService: DaffodilConfigService
-  ) {}
-
-  getAll(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url);
+class ProductService {
+    private apollo : Apollo;
+  constructor(apollo: Apollo, httpLink: HttpLink) {
+    apollo.create({
+      // By default, this client will send queries to the
+      // `/graphql` endpoint on the same host
+      link: httpLink.create({uri: 'https://daffodil-demo-alpha.myshopify.com/graphql'}),
+      cache: new InMemoryCache(),
+    });
+    this.apollo = apollo;
   }
 
-  get(productId: string): Observable<Product> {
-    return this.http.get<Product>(this.url + productId);
+  getAll() : Observable<T>  {
+      const query = gql`
+      {
+        shop {
+          products(first: 250) {
+            edges {
+              node {
+                id
+              }
+            }
+          } 
+        }
+      }
+      `;
+
+      return this.apollo.query({
+          query: query
+      });
+      
   }
+
+
+
 }
